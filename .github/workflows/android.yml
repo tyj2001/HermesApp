@@ -40,8 +40,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Verify submodules
+      - name: Initialize submodules
         run: |
+          git submodule update --init --recursive
           echo "Checking thirdparty directories..."
           ls -la app/src/main/cpp/thirdparty/
           [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }

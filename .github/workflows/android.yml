@@ -40,10 +40,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Initialize submodules
+      - name: Clone submodules
         run: |
-          git submodule update --init --recursive
-          echo "Checking thirdparty directories..."
+          echo "====== Checking gitmodules ======"
+          cat .gitmodules
+          echo "======= Checking if thirdparty dir exists ======"
+          ls -la app/src/main/cpp/ || echo "cpp dir does not exist"
+          mkdir -p app/src/main/cpp/thirtparty
+          echo "====== Cloning ncnn submodule ======"
+          git submodule add https://github.com/Tecent/ncnn.git app/src/main/cpp/thirdparty/ncnn || echo "ncnn already exists or failed"
+          echo "======= Cloning sherpa-ncnn submodule ======"
+          git submodule add https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn || echo "sherpa-ncnn already exists or failed"
+          echo "======= Checking thirtparty directories ======"
           ls -la app/src/main/cpp/thirdparty/
           [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }
           [ -d "app/src/main/cpp/thirdparty/ncnn" ] || { echo "ERROR: ncnn missing!"; exit 1; }

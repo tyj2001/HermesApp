@@ -43,8 +43,8 @@ jobs:
       - name: Clone submodules
         run: |
           mkdir -p app/src/main/cpp/thirdparty
-          git clone https://github.com/Tecent/ncnn.git app/src/main/cpp/thirdparty/ncnn
-          git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirtparty/sherpa-ncnn
+          git clone https://github.com/Tencent/ncnn.git app/src/main/cpp/thirdparty/ncnn
+          git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn
           ls -a app/src/main/cpp/thirdparty/
           [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }
           [ -d "app/src/main/cpp/thirdparty/ncnn" ] || { echo "ERROR: ncnn missing!"; exit 1; }

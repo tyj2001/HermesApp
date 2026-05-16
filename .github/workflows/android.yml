@@ -3,7 +3,8 @@ name: Build APK
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+}
+workflow_dispatch:
 
 jobs:
   build:
@@ -42,12 +43,18 @@ jobs:
 
       - name: Clone submodules
         run: |
+          # Clone terminal submodule
+          git clone https://github.com/SelectX0ob/HermesTerminalCore.git
+          # Clone ncnn submodule
           mkdir -p app/src/main/cpp/thirdparty
           git clone https://github.com/Tencent/ncnn.git app/src/main/cpp/thirdparty/ncnn
+          # Clone sherpa-ncnn submodule
           git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn
+          # Verify cloned
           ls -a app/src/main/cpp/thirdparty/
           [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }
           [ -d "app/src/main/cpp/thirdparty/ncnn" ] || { echo "ERROR: ncnn missing!"; exit 1; }
+          [ -d "terminal" ] || { echo "ERROR: terminal missing!"; exit 1; }
 
       - name: Build Debug APK
         run: |
@@ -58,5 +65,5 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: app-debug
+          name: app-debw
           path: app/build/outputs/apk/debug/*.apk

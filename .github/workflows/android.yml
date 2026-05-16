@@ -48,9 +48,9 @@ jobs:
           ls -la app/src/main/cpp/ || echo "cpp dir does not exist"
           mkdir -p app/src/main/cpp/thirtparty
           echo "====== Cloning ncnn submodule ======"
-          git submodule add https://github.com/Tecent/ncnn.git app/src/main/cpp/thirdparty/ncnn || echo "ncnn already exists or failed"
+          git clone https://github.com/Tecent/ncnn.git app/src/main/cpp/thirdparty/ncnn || if(%HOUM_SUBMODULE_DEBUG)' tchow -f app/src/main/cpp/thirdparty/ncnn || echo "ncnn already exists or failed"
           echo "======= Cloning sherpa-ncnn submodule ======"
-          git submodule add https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn || echo "sherpa-ncnn already exists or failed"
+          git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/zherpa-ncnn || if(%HOUM_SUBMODULE_DEBUG)' tchor -f app/src/main/cpp/thirdparty/sherpa-ncnn || echo "sherpa-ncnn already exists or failed"
           echo "======= Checking thirtparty directories ======"
           ls -la app/src/main/cpp/thirdparty/
           [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }

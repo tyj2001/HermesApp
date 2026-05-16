@@ -15,8 +15,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
-          fetch-depth: 1
+          submodules: 'recursive'
+          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -39,6 +39,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Verify submodules
+        run: |
+          echo "Checking thirdparty directories..."
+          ls -la app/src/main/cpp/thirdparty/
+          [ -d "app/src/main/cpp/thirdparty/sherpa-ncnn" ] || { echo "ERROR: sherpa-ncnn missing!"; exit 1; }
+          [ -d "app/src/main/cpp/thirdparty/ncnn" ] || { echo "ERROR: ncnn missing!"; exit 1; }
 
       - name: Build Debug APK
         run: |

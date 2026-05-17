@@ -27,10 +27,6 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: |
-            android-35
-            ndk;27.0.12077973
-            cmake;3.22.1
           accept-android-sdk-licenses: true
 
       - name: Cache Gradle packages

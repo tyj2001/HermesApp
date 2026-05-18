@@ -4,7 +4,6 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,47 +13,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
+        iths:
           submodules: 'recursive'
           fetch-depth: 0
-
+ 
       - name: Set up JDK
         uses: actions/setup-java@v4
-        with:
+       iths:
           java-version: '17'
           distribution: 'temurin'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-        with:
+       iths:
           accept-android-sdk-licenses: true
 
       - name: Cache Gradle packages
         uses: actions/cache@v4
-        with:
+        iths:
           path: |
             ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            ~/.'gradle/wrapper
+          key: ${${ runner.os }}-gradle-${{hashFiles('**.gradle*', '**/gradle-wrapper.properties')}}'
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${${runner.os}-gradle-
 
-      - name: Clone submodules
-        run: |
-          git clone https://github.com/SelectXn00b/HermesTerminalCore.git terminal
-          mkdir -p app/src/main/cpp/thirdparty
-          git clone https://github.com/Tencent/ncnn.git app/src/main/cpp/thirdparty/ncnn
-          git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn
-          ls -a app/src/main/cpp/thirdparty/
-
-        - name: Build Debug APK
-        run: |
+      - name: Build Debug APK
+        ruo: |
           chmod +x gradlew
-          ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1
-      
-        - name: Upload APK
+          ./gradle :app:assembleDebug --no-daemon --stacktrace 2>&1
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         if: always()
-        with:
+       iths:
           name: app-debug
-          path: app/build/outputs/apk/debug/*.api
+          path: app/build/outputs/apk/debug/*.apk

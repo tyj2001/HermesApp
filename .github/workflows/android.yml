@@ -41,17 +41,20 @@ jobs:
 
       - name: Clone submodules
         run: |
+          # Clone terminal submodule
+          git clone https://github.com/SelectXn00b/HermesTerminalCore.git terminal
+          # Clone ncnn
           mkdir -p app/src/main/cpp/thirdparty
           git clone https://github.com/Tencent/ncnn.git app/src/main/cpp/thirdparty/ncnn
           git clone https://github.com/k2-fsa/sherpa-ncnn.git app/src/main/cpp/thirdparty/sherpa-ncnn
           ls -a app/src/main/cpp/thirdparty/
 
-      - name: Build Debug APK
+        - name: Build Debug APK
         run: |
           chmod +x gradlew
           ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1
-
-      - name: Upload APK
+      
+        - name: Upload APK
         uses: actions/upload-artifact@v4
         if: always()
         with:

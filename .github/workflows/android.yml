@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
-          fetch-depth : 0
+          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches
+            ~/.'gradle/caches
             ~/.'gradle/wrapper
           key: ${${ runner.os }}-gradle-${{hashFiles('**.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
